@@ -49,6 +49,7 @@ class FileHandler:
 
 
 if __name__ == '__main__':
+    print("Aviya!!!!!!!!")
     # TODO: handle edge cases (don't send args,  wrong path...)
     command = sys.argv[1]
     args = sys.argv[2:]
