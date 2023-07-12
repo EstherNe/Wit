@@ -1,17 +1,55 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import sys
+import os
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-    a = 2
+class WitInterface:
+    @staticmethod
+    def handle_commands(command, *args):
+        match command:
+            case 'init':
+                print("init!!!!")
+            case 'add':
+                print("add!!!!!!!!!!")
+            case 'commit':
+                print("commit!!!!!")
+
+class Wit:
+
+    @staticmethod
+    def validate_is_wit_repo():
+        return FileHandler.find_base_path()
 
 
-# Press the green button in the gutter to run the script.
+    @staticmethod
+    def init():
+        if Wit.validate_is_wit_repo():
+            # handle nested wits
+            pass
+        else:
+            FileHandler.create_dir(".wit")
+            FileHandler.create_dir(".wit/images")
+            FileHandler.create_dir(".wit/staging_area")
+
+    @staticmethod
+    def move_to_staging(full_path):
+        target_path = os.path.join(FileHandler.base_path, "staging_area")
+        FileHandler.copy_item(full_path, target_path)
+
+    @staticmethod
+    def add(args):
+        full_path = FileHandler.validate_path(args[0])
+        Wit.move_to_staging(full_path)
+
+    @staticmethod
+    def commit():
+        pass
+
+class FileHandler:
+    pass
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    # TODO: handle edge cases (don't send args,  wrong path...)
+    command = sys.argv[1]
+    args = sys.argv[2:]
+    WitInterface.handle_commands(command, args)
